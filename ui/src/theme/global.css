@@ -1,0 +1,136 @@
+:root {
+  /* Colors — primary */
+  --color-primary: #6366f1;
+  --color-primary-light: #818cf8;
+  --color-primary-dim: #4f46e5;
+  --color-primary-hover: rgba(99, 102, 241, 0.15);
+  --color-primary-subtle: rgba(99, 102, 241, 0.08);
+  --color-primary-muted: rgba(99, 102, 241, 0.06);
+
+  /* Colors — backgrounds */
+  --color-bg-base: #0a0a0f;
+  --color-bg-container: #12121a;
+  --color-bg-elevated: #1a1a2e;
+  --color-bg-surface: #16161e;
+  --color-bg-sider: #0f0f1a;
+
+  /* Colors — borders */
+  --color-border: #2a2a3e;
+  --color-border-secondary: #1e1e30;
+  --color-border-hover: #3a3a4e;
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* Colors — text */
+  --color-text: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-tertiary: #64748b;
+  --color-text-dim: #475569;
+  --color-text-muted: #3a3a4e;
+
+  /* Colors — semantic */
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+  --color-link: #818cf8;
+
+  /* Colors — overlays & shadows */
+  --color-overlay: rgba(0, 0, 0, 0.85);
+  --color-shadow: rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-xs: 9px;
+  --font-sm: 11px;
+  --font-md: 12px;
+  --font-base: 13px;
+  --font-lg: 14px;
+  --font-xl: 20px;
+
+  /* Spacing */
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 20px;
+  --space-7: 24px;
+  --space-8: 48px;
+
+  /* Icons render at 1em; this scales every icon uniformly */
+  --icon-scale: 1.15;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Shadows */
+  --shadow-elevated: 0 8px 32px var(--color-shadow);
+
+  /* Transitions */
+  --transition-fast: all 0.15s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* lucide icons: size with the surrounding font, like text glyphs. */
+svg.lucide {
+  width: calc(1em * var(--icon-scale));
+  height: calc(1em * var(--icon-scale));
+  flex-shrink: 0;
+  vertical-align: -0.15em;
+}
+
+.icon-spin {
+  animation: icon-spin 1s linear infinite;
+}
+
+@keyframes icon-spin {
+  to { transform: rotate(360deg); }
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-bg-base);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+}
+
+.highlight-flash {
+  animation: highlightFlash 1.5s ease;
+}
+
+@keyframes highlightFlash {
+  0% { box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.6); }
+  100% { box-shadow: 0 0 0 2px transparent; }
+}

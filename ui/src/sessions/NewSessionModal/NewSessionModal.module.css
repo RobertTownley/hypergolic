@@ -1,0 +1,122 @@
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-5);
+  padding: var(--space-6);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 var(--space-2);
+}
+
+.optionList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.optionBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.optionBtn:hover {
+  background: var(--color-bg-hover);
+  color: var(--color-text);
+}
+
+.optionBtn.active {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-container);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-xs);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.optionBtn.active .kbd {
+  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+}
+
+.optionLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.hint {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+}
+
+.hint .kbd {
+  margin: 0 2px;
+}
+
+.createBtn {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary-hover);
+  color: var(--color-primary-light);
+  font-size: var(--font-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.createBtn:hover {
+  background: rgba(99, 102, 241, 0.25);
+  color: var(--color-text);
+}
+
+.createBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

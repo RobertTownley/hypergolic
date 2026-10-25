@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/.."
+unset PYTHONDONTWRITEBYTECODE
+
+backend() {
+  echo "=== Type checking ===" && uv run ty check &&
+  echo "=== Linting ===" && uv run ruff check . &&
+  echo "=== Backend: Tests ===" &&
+  uv run --env-file .env.testing python scripts/suite_guard.py 20 \
+    python -m pytest -q -n auto --maxprocesses="${HG_CPUS:-6}" --dist worksteal
+}
+
+ui() {
+  cd ui &&
+  echo "=== UI: Type checking ===" && pnpm run typecheck &&
+  echo "=== UI: Linting ===" && pnpm run lint &&
+  echo "=== UI: Tests ===" && uv run python ../scripts/suite_guard.py 20 pnpm run test --maxWorkers="${HG_CPUS:-4}"
+}
+
+logs=$(mktemp -d)
+trap 'rm -rf "$logs"' EXIT
+backend >"$logs/be" 2>&1 & be=$!
+ui >"$logs/ui" 2>&1 & fe=$!
+rc=0
+wait $be || rc=1; cat "$logs/be"
+wait $fe || rc=1; cat "$logs/ui"
+
+
+echo "=== Lockfile audit ==="
+if grep -o -E 'https?://[^/"]+' uv.lock | grep -q -v -x -E 'https://(pypi\.org|files\.pythonhosted\.org)'; then
+  echo "uv.lock references a non-PyPI index; run 'uv lock' against pypi.org" >&2
+  exit 1
+fi
+
+[ $rc -eq 0 ] || { echo "=== Checks failed ===" >&2; exit 1; }
+echo "=== All checks passed ==="

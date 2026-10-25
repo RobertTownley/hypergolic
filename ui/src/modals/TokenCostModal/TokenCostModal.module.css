@@ -1,0 +1,134 @@
+.tableWrapper {
+  padding: var(--space-5) var(--space-6) var(--space-6);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  text-align: left;
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 0 10px 0;
+}
+
+.thRight {
+  composes: th;
+  text-align: right;
+}
+
+.row td {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.td {
+  font-size: var(--font-base);
+  color: var(--color-text);
+}
+
+.tdRight {
+  font-size: var(--font-base);
+  color: var(--color-text);
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.totalRow td {
+  padding: var(--space-4) 0 0 0;
+  font-weight: 600;
+}
+
+.totalRow .td {
+  font-size: var(--font-lg);
+  color: var(--color-text);
+}
+
+.totalRow .tdRight {
+  font-size: var(--font-lg);
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.childSection {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--color-border-secondary);
+  padding-top: var(--space-4);
+}
+
+.childSectionHeader {
+  font-size: var(--font-sm);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.childRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.childLabel {
+  font-size: var(--font-base);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.childTier {
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  background: var(--color-bg-tertiary);
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.childCost {
+  font-size: var(--font-base);
+  font-family: var(--font-mono);
+  color: var(--color-text);
+  text-align: right;
+}
+
+.childTotalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0 0 0;
+  font-weight: 600;
+  font-size: var(--font-base);
+  color: var(--color-text);
+}
+
+.combinedTotalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--color-border-secondary);
+  font-weight: 600;
+  font-size: var(--font-lg);
+  color: var(--color-text);
+}
+
+.combinedTotalRow .childCost {
+  font-size: var(--font-lg);
+  color: var(--color-success);
+  font-weight: 600;
+}

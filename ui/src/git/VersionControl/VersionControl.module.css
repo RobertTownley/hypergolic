@@ -1,0 +1,299 @@
+.branchRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border-secondary);
+  position: relative;
+}
+
+.branchNameBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  transition: background 0.1s;
+}
+
+.branchNameBtn:hover:not(:disabled) {
+  background: var(--color-primary-muted);
+}
+
+.branchNameBtn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.branchName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary-light);
+  font-family: var(--font-mono);
+}
+
+.branchCaret {
+  font-size: 9px;
+  color: var(--color-text-tertiary);
+}
+
+.branchSpinner {
+  font-size: 12px;
+  color: var(--color-primary-light);
+}
+
+.branchDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.branchDropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--color-text);
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.branchDropdownItem:hover {
+  background: var(--color-primary-muted);
+}
+
+.branchDropdownIcon {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+}
+
+.branchDropdownEmpty {
+  display: block;
+  padding: 8px 14px;
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+.branchDropdownDivider {
+  height: 1px;
+  background: var(--color-border-secondary);
+  margin: 2px 0;
+}
+
+.newBranchRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+}
+
+.newBranchInput {
+  flex: 1;
+  padding: 3px 6px;
+  background: var(--color-bg-container);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  outline: none;
+}
+
+.newBranchInput::placeholder {
+  color: var(--color-text-muted);
+}
+
+.newBranchConfirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  cursor: pointer;
+  font-size: 11px;
+  transition: opacity 0.1s;
+}
+
+.newBranchConfirm:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.aheadBehind {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.aheadBehind .ahead {
+  color: #4ade80;
+}
+
+.aheadBehind .behind {
+  color: var(--color-error);
+}
+
+.diffModeToggle {
+  display: flex;
+  gap: 2px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.diffModeBtn,
+.diffModeActive {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-container);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+
+.diffModeBtn:first-child,
+.diffModeActive:first-child {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.diffModeBtn:last-child,
+.diffModeActive:last-child {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.diffModeBtn:hover {
+  background: var(--color-primary-muted);
+}
+
+.diffModeDisabled {
+  composes: diffModeBtn;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.diffModeDisabled:hover {
+  background: var(--color-bg-container);
+}
+
+/* Repo toggle sits directly above the diff-mode toggle; only the last row keeps the divider. */
+.repoToggle {
+  composes: diffModeToggle;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.diffModeActive {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.fileList {
+  padding: 4px 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sectionActions {
+  display: flex;
+  gap: 4px;
+}
+
+.errorOutput {
+  padding: 8px 14px;
+  border-top: 1px solid color-mix(in srgb, var(--color-error) 30%, transparent);
+  background: color-mix(in srgb, var(--color-error) 8%, transparent);
+  flex-shrink: 0;
+}
+
+.errorOutputHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.errorLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-error);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dismissBtn {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 10px;
+  opacity: 0.6;
+  transition: opacity 0.1s;
+}
+
+.dismissBtn:hover {
+  opacity: 1;
+}
+
+.errorOutputText {
+  font-size: 11px;
+  color: var(--color-error);
+  font-family: var(--font-mono);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.actionOutput {
+  padding: 8px 14px;
+  border-top: 1px solid var(--color-border-secondary);
+  flex-shrink: 0;
+}
+
+.actionOutputText {
+  font-size: 11px;
+  color: #4ade80;
+  font-family: var(--font-mono);
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 60px;
+  overflow-y: auto;
+}
+

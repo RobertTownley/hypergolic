@@ -1,0 +1,86 @@
+/**
+ * Two columns, two rows, explicit tracks. The transcript is the only region
+ * that scrolls; the composer and the inspector are sized by content. The
+ * `minmax(0, ...)` on both flexible tracks is what stops a wide line of output
+ * from widening the grid instead of scrolling inside its own box.
+ */
+.container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "ledger inspect"
+    "input  inspect";
+  height: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.inputArea {
+  grid-area: input;
+  min-width: 0;
+}
+
+.emptyState {
+  flex: 1;
+  gap: var(--space-5);
+  opacity: 0.7;
+}
+
+.streamingIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+}
+
+.truncatingIndicator {
+  background: rgba(249, 115, 22, 0.06);
+  border: 1px solid rgba(249, 115, 22, 0.15);
+  border-radius: var(--radius-lg);
+}
+
+.retryingIndicator {
+  background: rgba(250, 204, 21, 0.06);
+  border: 1px solid rgba(250, 204, 21, 0.15);
+  border-radius: var(--radius-lg);
+}
+
+.truncatingIcon {
+  animation: truncatePulse 1.2s ease-in-out infinite;
+}
+
+@keyframes truncatePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.activeBar {
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  animation: activeBarPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes activeBarPulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.7; }
+}
+
+.errorMessage {
+  padding: var(--space-4) var(--space-6);
+  background: color-mix(in srgb, var(--color-error) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-error) 15%, transparent);
+  border-radius: var(--radius-lg);
+}
+
+.sessionNotice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5) var(--space-7);
+  border-top: 1px solid var(--color-border-secondary);
+  color: var(--color-text-tertiary);
+  font-size: var(--font-base);
+  font-weight: 500;
+}

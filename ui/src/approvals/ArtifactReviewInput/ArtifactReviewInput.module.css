@@ -1,0 +1,182 @@
+.annotationCount {
+  font-size: 10px;
+  color: #a5b4fc;
+  background: var(--color-primary-hover);
+  border-radius: var(--radius-lg);
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+.annotationsSection {
+  padding: 0 24px;
+  flex-shrink: 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.annotationChip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px;
+  margin-top: 6px;
+  background: var(--color-primary-subtle);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-md);
+  font-size: 11px;
+}
+
+.annotationHighlight {
+  color: #a5b4fc;
+  font-style: italic;
+  flex-shrink: 0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.annotationComment {
+  color: #cbd5e1;
+  flex: 1;
+  min-width: 0;
+}
+
+.annotationRemove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--color-text-tertiary);
+  font-size: 9px;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.annotationRemove:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.annotationToolbar {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: var(--color-border-secondary);
+  border: 1px solid #3a3a5e;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+.annotationToolbarBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  color: #a5b4fc;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background 0.1s;
+}
+
+.annotationToolbarBtn:hover {
+  background: var(--color-primary-hover);
+}
+
+.annotationInput {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: var(--color-border-secondary);
+  border: 1px solid #3a3a5e;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  width: 280px;
+}
+
+.annotationInputLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.annotationInputQuote {
+  font-size: 11px;
+  color: #a5b4fc;
+  font-style: italic;
+  padding: 4px 8px;
+  background: var(--color-primary-subtle);
+  border-radius: var(--radius-sm);
+  max-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.annotationTextarea {
+  width: 100%;
+  background: var(--color-bg-container);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 6px 8px;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  resize: none;
+  outline: none;
+  min-height: 48px;
+}
+
+.annotationTextarea:focus {
+  border-color: var(--color-primary);
+}
+
+.annotationInputActions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.annotationInputBtn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.annotationInputSave {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.annotationInputSave:hover {
+  background: var(--color-primary-light);
+}
+
+.annotationInputCancel {
+  background: transparent;
+  color: var(--color-text-tertiary);
+}
+
+.annotationInputCancel:hover {
+  color: var(--color-text-secondary);
+}

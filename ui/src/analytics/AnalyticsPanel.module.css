@@ -1,0 +1,207 @@
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.filterSelect {
+  min-width: 140px;
+  font-size: 11px;
+}
+
+.content {
+  padding: 16px;
+}
+
+.error {
+  color: var(--color-error);
+  font-size: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.summaryLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.summaryValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.summarySub {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.chartTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
+}
+
+.chartContainer {
+  width: 100%;
+  height: 200px;
+}
+
+.toolRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(30, 30, 48, 0.5);
+}
+
+.toolRow:last-child {
+  border-bottom: none;
+}
+
+.toolName {
+  flex: 1;
+  font-size: 12px;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.toolCount {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  min-width: 40px;
+  text-align: right;
+}
+
+.toolBar {
+  flex: 1;
+  max-width: 200px;
+  height: 6px;
+  background: var(--color-border-secondary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.toolBarFill {
+  height: 100%;
+  background: #4f46e5;
+  border-radius: 3px;
+  opacity: 0.6;
+  transition: width 0.3s;
+}
+
+.emptyState {
+  padding: 48px 14px;
+}
+
+@media (max-width: 900px) {
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tabBar {
+  display: flex;
+  gap: 4px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--color-border-secondary);
+  flex-shrink: 0;
+}
+
+.tab,
+.tabActive {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-tertiary);
+  cursor: pointer;
+}
+
+.tab svg,
+.tabActive svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tab:hover {
+  background: var(--color-primary-muted);
+  color: var(--color-text);
+}
+
+.tabActive {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  table-layout: fixed;
+}
+
+.table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  padding: 4px 6px;
+}
+
+.table td {
+  padding: 5px 6px;
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table th:not(:first-child),
+.table td:not(:first-child) {
+  width: 72px;
+  text-align: right;
+}
+
+.tablesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}

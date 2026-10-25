@@ -1,0 +1,82 @@
+name: Publish to PyPI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pyproject.toml'
+
+jobs:
+  check-version:
+    name: Check for version change
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.check.outputs.should_publish }}
+      version: ${{ steps.check.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Check if version changed
+        id: check
+        run: |
+          NEW_VERSION=$(grep -m1 'version = ' pyproject.toml | cut -d'"' -f2)
+          git show HEAD~1:pyproject.toml > old_pyproject.toml 2>/dev/null || echo 'version = "0.0.0"' > old_pyproject.toml
+          OLD_VERSION=$(grep -m1 'version = ' old_pyproject.toml | cut -d'"' -f2)
+
+          if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
+            echo "Version changed: $OLD_VERSION -> $NEW_VERSION"
+            echo "should_publish=true" >> $GITHUB_OUTPUT
+            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "Version unchanged: $NEW_VERSION"
+            echo "should_publish=false" >> $GITHUB_OUTPUT
+          fi
+
+  publish:
+    name: Build and publish to PyPI
+    needs: check-version
+    if: needs.check-version.outputs.should_publish == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.9.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+          cache-dependency-path: ui/pnpm-lock.yaml
+
+      - name: Build UI
+        working-directory: ui
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.2.0
+
+      - name: Build package
+        run: uv build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ needs.check-version.outputs.version }}" \
+            --title "v${{ needs.check-version.outputs.version }}" \
+            --generate-notes

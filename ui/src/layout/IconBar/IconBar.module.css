@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 36px;
+  background: #080810;
+  border-right: 1px solid var(--color-border-secondary);
+  flex-shrink: 0;
+  padding-top: 0;
+  gap: 2px;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 8px;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+.logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  font-size: 16px;
+  transition: var(--transition-fast);
+  position: relative;
+}
+
+.tabBtn:hover {
+  color: var(--color-text-secondary);
+  background: var(--color-primary-muted);
+}
+
+.tabBtnActive {
+  color: var(--color-text) !important;
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.tabBtnActive::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--color-primary);
+  border-radius: 1px;
+}

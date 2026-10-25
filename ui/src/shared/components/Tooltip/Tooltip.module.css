@@ -1,0 +1,23 @@
+.content {
+  z-index: 1070;
+  max-width: 250px;
+  padding: 6px 8px;
+  border-radius: var(--radius-md);
+  background: #353569;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: var(--shadow-elevated);
+  word-wrap: break-word;
+  animation: fadeIn 0.1s ease-out;
+}
+
+.arrow {
+  fill: #353569;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}

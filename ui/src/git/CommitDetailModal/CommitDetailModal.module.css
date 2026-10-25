@@ -1,0 +1,125 @@
+.commitModal {
+  overflow: hidden;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1;
+}
+
+.headerTitle {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hash {
+  font-size: var(--font-md);
+  color: var(--color-primary-light);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.message {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.author {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+}
+
+.date {
+  font-size: var(--font-sm);
+  color: var(--color-text-dim);
+}
+
+.diffContent {
+  font-family: var(--font-mono);
+  font-size: var(--font-md);
+  line-height: 1.6;
+}
+
+.fileHeader {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-primary-subtle);
+  border-top: 1px solid var(--color-border-secondary);
+  border-bottom: 1px solid var(--color-border-secondary);
+  font-family: var(--font-mono);
+}
+
+.fileHeader:first-child {
+  border-top: none;
+}
+
+.diffLine {
+  display: flex;
+  white-space: pre;
+  min-height: 19px;
+}
+
+.lineNumber {
+  display: inline-block;
+  width: 42px;
+  padding: 0 var(--space-3) 0 0;
+  text-align: right;
+  color: var(--color-text-muted);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.lineContent {
+  flex: 1;
+  padding: 0 var(--space-4) 0 var(--space-2);
+}
+
+.add {
+  background: rgba(74, 222, 128, 0.08);
+}
+
+.add .lineContent {
+  color: #4ade80;
+}
+
+.del {
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.del .lineContent {
+  color: var(--color-error);
+}
+
+.hunk {
+  background: var(--color-primary-muted);
+}
+
+.hunk .lineContent {
+  color: var(--color-primary-light);
+}
+
+.context .lineContent {
+  color: var(--color-text-tertiary);
+}

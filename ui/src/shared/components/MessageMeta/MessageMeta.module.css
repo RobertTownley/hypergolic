@@ -1,0 +1,22 @@
+.left,
+.right {
+  position: absolute;
+  top: 6px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: #4a4a6a;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.left {
+  left: 14px;
+}
+
+.right {
+  right: 14px;
+}

@@ -1,0 +1,46 @@
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.iconButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.small {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+}
+
+.medium {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+}
+
+.ghost {
+  color: var(--color-text-tertiary);
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--color-text);
+  background: var(--color-primary-subtle);
+}
+
+.danger {
+  color: var(--color-text-muted);
+}
+
+.danger:hover:not(:disabled) {
+  color: var(--color-error);
+  background: rgba(248, 113, 113, 0.08);
+}

@@ -1,0 +1,44 @@
+.codeModal {
+  max-height: 80vh;
+  min-width: 400px;
+  overflow: hidden;
+  background: var(--color-bg-base) !important;
+}
+
+.filePath {
+  font-family: var(--font-mono);
+  font-size: var(--font-md);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lineRange {
+  font-family: var(--font-mono);
+  font-size: var(--font-sm);
+  color: var(--color-primary-light);
+  flex-shrink: 0;
+  padding: var(--space-1) var(--space-3);
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.codeWrapper {
+  overflow: auto;
+  max-height: calc(80vh - 52px);
+}
+
+.codeWrapper pre {
+  background: var(--color-bg-base) !important;
+}
+
+.codeWrapper code {
+  background: none !important;
+}
+
+.codeWrapper span {
+  background: none !important;
+  background-color: transparent !important;
+}

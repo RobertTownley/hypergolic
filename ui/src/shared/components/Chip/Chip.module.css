@@ -1,0 +1,35 @@
+.chip {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--font-sm);
+  line-height: 16px;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  color: var(--chip-color);
+  background: color-mix(in srgb, var(--chip-color) 12%, transparent);
+}
+
+.neutral {
+  --chip-color: var(--color-text-tertiary);
+}
+
+.ok {
+  --chip-color: var(--color-success);
+}
+
+.error {
+  --chip-color: var(--color-error);
+}
+
+.warning {
+  --chip-color: var(--color-warning);
+}
+
+.info {
+  --chip-color: var(--color-info);
+}
+
+.tool {
+  --chip-color: var(--color-warning);
+}

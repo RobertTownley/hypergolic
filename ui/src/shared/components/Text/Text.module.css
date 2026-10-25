@@ -1,0 +1,16 @@
+.text {
+  color: var(--color-text);
+  word-break: break-word;
+}
+
+.danger { color: var(--color-error); }
+.secondary { color: var(--color-text-secondary); }
+
+.ellipsis {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+}

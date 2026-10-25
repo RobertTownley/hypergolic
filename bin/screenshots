@@ -1,0 +1,255 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.14"
+# dependencies = ["playwright", "pillow"]
+# ///
+import argparse
+import asyncio
+import io
+import json
+import mimetypes
+import subprocess
+import time
+from collections.abc import Awaitable, Callable
+from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
+
+from PIL import Image
+from playwright.async_api import (
+    Browser,
+    BrowserContext,
+    Error,
+    Page,
+    Request,
+    Response,
+    Route,
+    WebSocketRoute,
+    async_playwright,
+)
+
+ROOT = Path(__file__).resolve().parent.parent
+DIST = ROOT / "hypergolic" / "ui_dist"
+ASSETS = ROOT / "assets"
+FIXTURE = ASSETS / "screenshots.json"
+ORIGIN = "http://hypergolic.localhost"
+VIEWPORT = {"width": 1600, "height": 1000}
+
+
+async def open_session(page: Page, title: str) -> None:
+    await page.locator("[class*=_sessionCard_]", has_text=title).first.click()
+    await page.wait_for_timeout(1500)
+
+
+async def scroll_to(page: Page, text: str) -> None:
+    await page.get_by_text(text, exact=True).first.evaluate(
+        "e => e.scrollIntoView({block: 'start'})"
+    )
+
+
+async def session(page: Page) -> None:
+    await open_session(page, "Fix cart total")
+    await page.keyboard.press("ControlOrMeta+1")
+    await page.get_by_role("tab", name="Diff", exact=True).click()
+    await page.get_by_text("pricing.py", exact=True).last.click()
+    pycache = page.locator("[class*=_dirItem_]", has_text="__pycache__")
+    for i in reversed(range(await pycache.count())):
+        await pycache.nth(i).click()
+    await page.get_by_text("3 tool calls").first.click()
+
+
+async def dispatch(page: Page) -> None:
+    await open_session(page, "Add parallel features")
+    await page.keyboard.press("ControlOrMeta+1")
+    await page.get_by_role("tab", name="Diff", exact=True).click()
+    await page.get_by_text("Show 3 children").click()
+
+
+async def harness(page: Page) -> None:
+    await open_session(page, "Deploy v1.3.0")
+    await page.keyboard.press("ControlOrMeta+4")
+    await page.get_by_text("main.py", exact=True).first.click()
+    await page.wait_for_timeout(800)
+    await scroll_to(page, "deploy_approval")
+
+
+async def activity(page: Page) -> None:
+    await open_session(page, "Add parallel features")
+    await page.get_by_text("View details").click()
+
+
+async def finder(page: Page) -> None:
+    await open_session(page, "Add parallel features")
+    await page.keyboard.press("ControlOrMeta+p")
+    await page.get_by_placeholder("Search all").fill("exp")
+
+
+SCENES: dict[str, Callable[[Page], Awaitable[None]]] = {
+    "session": session,
+    "dispatch": dispatch,
+    "harness": harness,
+    "activity": activity,
+    "finder": finder,
+}
+
+
+def scrub(text: str) -> str:
+    return text.replace(str(Path.home()), "~")
+
+
+def api_key(method: str, url: str) -> str:
+    parts = urlsplit(url)
+    return (
+        f"{method} {parts.path}?{parts.query}"
+        if parts.query
+        else f"{method} {parts.path}"
+    )
+
+
+async def new_context(browser: Browser) -> BrowserContext:
+    return await browser.new_context(
+        viewport=VIEWPORT, device_scale_factor=2, color_scheme="dark"
+    )
+
+
+async def run_scene(page: Page, url: str, name: str) -> None:
+    await page.goto(url)
+    await page.wait_for_timeout(2000)
+    await SCENES[name](page)
+    await page.wait_for_timeout(1000)
+
+
+async def record(
+    browser: Browser, url: str, cookie: str | None, names: list[str]
+) -> None:
+    parts = urlsplit(url)
+    base = f"{parts.scheme}://{parts.netloc}/"
+    token = parse_qs(parts.query).get("token", [""])[0]
+    fixture = (
+        json.loads(FIXTURE.read_text()) if FIXTURE.exists() else {"api": {}, "ws": {}}
+    )
+    fixture["recorded_at"] = int(time.time())
+    if cookie:
+        cookies = [{"name": "h_token", "value": cookie, "url": base}]
+    else:
+        login = await new_context(browser)
+        await (await login.new_page()).goto(f"{base}?token={token}")
+        cookies = [c for c in await login.cookies() if c["name"] == "h_token"]
+    if not cookies:
+        raise SystemExit("login failed; pass a fresh ?token= URL or --cookie")
+    pending: set[asyncio.Task] = set()
+
+    async def capture(response: Response) -> None:
+        if not urlsplit(response.url).path.startswith("/api/"):
+            return
+        kind = response.headers.get("content-type", "")
+        try:
+            body = "" if "event-stream" in kind else await response.text()
+        except Error:
+            return
+        fixture["api"][api_key(response.request.method, response.url)] = {
+            "status": response.status,
+            "type": kind,
+            "body": scrub(body),
+        }
+
+    for name in names:
+        context = await new_context(browser)
+        await context.add_cookies(cookies)
+        page = await context.new_page()
+        frames: list[str] = fixture["ws"].setdefault(name, [])
+        frames.clear()
+        page.on(
+            "websocket",
+            lambda ws, frames=frames: ws.on(
+                "framereceived", lambda f: frames.append(scrub(f))
+            ),
+        )
+        page.on("response", lambda r: pending.add(asyncio.ensure_future(capture(r))))
+        await run_scene(page, base, name)
+        await asyncio.gather(*pending, return_exceptions=True)
+        await context.close()
+        print("recorded", name)
+    FIXTURE.write_text(json.dumps(fixture, indent=0, sort_keys=True) + "\n")
+
+
+async def shoot(browser: Browser, names: list[str]) -> None:
+    fixture = json.loads(FIXTURE.read_text())
+    missing: set[str] = set()
+
+    async def serve(route: Route, request: Request) -> None:
+        path = urlsplit(request.url).path
+        if path.startswith("/api/"):
+            key = api_key(request.method, request.url)
+            hit = fixture["api"].get(key)
+            if hit:
+                await route.fulfill(
+                    status=hit["status"], content_type=hit["type"], body=hit["body"]
+                )
+                return
+            if request.method == "GET":
+                missing.add(key)
+            await route.fulfill(status=404 if request.method == "GET" else 204)
+            return
+        file = DIST / path.lstrip("/")
+        if not file.is_file():
+            file = DIST / "index.html"
+        await route.fulfill(
+            body=file.read_bytes(), content_type=mimetypes.guess_type(file.name)[0]
+        )
+
+    for name in names:
+        context = await new_context(browser)
+        await context.route(f"{ORIGIN}/**", serve)
+        page = await context.new_page()
+        await page.clock.set_fixed_time(fixture["recorded_at"])
+
+        def replay(
+            ws: WebSocketRoute, frames: list[str] = fixture["ws"].get(name, [])
+        ) -> None:
+            for frame in frames:
+                ws.send(frame)
+
+        await page.route_web_socket(f"{ORIGIN.replace('http', 'ws')}/ws", replay)
+        await run_scene(page, ORIGIN, name)
+        png = await page.screenshot()
+        Image.open(io.BytesIO(png)).save(ASSETS / f"{name}.webp", quality=80, method=6)
+        await context.close()
+        print("shot", name)
+    for key in sorted(missing):
+        print("unrecorded", key)
+
+
+async def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Docs screenshots: record API/WS traffic from a live server, then replay it offline"
+    )
+    parser.add_argument(
+        "scenes", nargs="*", help=f"default: all of {', '.join(SCENES)}"
+    )
+    parser.add_argument(
+        "--record",
+        metavar="URL",
+        help="server URL with a fresh ?token= to record fixtures from",
+    )
+    parser.add_argument(
+        "--cookie", help="h_token cookie of a signed-in browser, instead of ?token="
+    )
+    args = parser.parse_args()
+    names = args.scenes or list(SCENES)
+    if unknown := set(names) - set(SCENES):
+        parser.error(f"unknown scenes: {', '.join(sorted(unknown))}")
+    if not args.record:
+        subprocess.run(
+            ["pnpm", "--dir", str(ROOT / "ui"), "run", "build"],
+            check=True,
+            capture_output=True,
+        )
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(channel="chrome", args=["--hide-scrollbars"])
+        if args.record:
+            await record(browser, args.record, args.cookie, names)
+        await shoot(browser, names)
+        await browser.close()
+
+
+asyncio.run(main())

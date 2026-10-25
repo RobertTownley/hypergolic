@@ -1,0 +1,88 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--font-xs);
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+/* Variants — solid backgrounds */
+.primary {
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.primary.outline {
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.success {
+  color: var(--color-success);
+  background: rgba(52, 211, 153, 0.12);
+}
+
+.success.outline {
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.warning {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.warning.outline {
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.error {
+  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.error.outline {
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.muted {
+  color: var(--color-text-tertiary);
+  background: rgba(100, 116, 139, 0.06);
+}
+
+.muted.outline {
+  border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.purple {
+  color: #a78bfa;
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.purple.outline {
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.info {
+  color: var(--color-info);
+  background: rgba(96, 165, 250, 0.12);
+}
+
+.info.outline {
+  border: 1px solid rgba(96, 165, 250, 0.2);
+}

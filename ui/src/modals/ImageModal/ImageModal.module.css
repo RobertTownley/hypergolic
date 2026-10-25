@@ -1,0 +1,53 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  cursor: default;
+}
+
+.image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elevated);
+}
+
+.closeButton {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(30, 30, 48, 0.9);
+  color: var(--color-text);
+  font-size: var(--font-lg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.closeButton:hover {
+  background: rgba(99, 102, 241, 0.4);
+}

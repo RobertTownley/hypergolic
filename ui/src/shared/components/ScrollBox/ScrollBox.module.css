@@ -1,0 +1,11 @@
+.box {
+  --sb-line-height: 1.55em;
+  max-height: calc(var(--sb-lines) * var(--sb-line-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  line-height: var(--sb-line-height);
+}
+
+.box::-webkit-scrollbar {
+  width: 5px;
+}

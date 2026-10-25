@@ -1,0 +1,36 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.mainContent {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.iconBarContainer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.centerContent {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.rightSidebar {
+  height: 100%;
+  overflow: auto;
+  background: var(--bg-primary, #0f0f1a);
+  border-left: 1px solid var(--border-color, #1e1e30);
+  flex-shrink: 0;
+}
+

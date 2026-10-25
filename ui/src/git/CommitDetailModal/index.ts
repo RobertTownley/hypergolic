@@ -1,0 +1,1 @@
+export { CommitDetailModal } from "./CommitDetailModal";

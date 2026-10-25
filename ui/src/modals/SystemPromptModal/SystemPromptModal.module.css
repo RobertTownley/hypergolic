@@ -1,0 +1,37 @@
+.sections {
+  padding: var(--space-3) 0;
+}
+
+.section {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.sectionSource {
+  font-size: var(--font-base);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.sectionTokens {
+  font-size: var(--font-sm);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.sectionContent {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
